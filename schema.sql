@@ -50,3 +50,9 @@ CREATE UNIQUE INDEX namealgoindex on tsigkeys(name, algorithm);
 CREATE INDEX nametype_index ON "records"(name,type);
 CREATE INDEX orderindex on records(ordername);
 CREATE INDEX rec_name_index ON "records"(name);
+
+CREATE TABLE users (
+    id integer PRIMARY KEY,
+    username varchar(255) not null,
+    password varchar(255) not null
+);
