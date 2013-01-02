@@ -1,0 +1,16 @@
+{
+  "name": "referential-dns",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.8",
+    "jade": ">= 0.0.1",
+    "passport": "~0.1.15"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Aria Stewart <aredridel@nbtsc.org>",
+  "description": "A simple web service to run a DNS host"
+}
