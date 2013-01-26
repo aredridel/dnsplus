@@ -35,7 +35,7 @@ app.configure(function () {
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
-        db.get("SELECT id, password FROM users WHERE username = $username", {$username : username}, function (err, row) {
+        db.get("SELECT id, username, password FROM users WHERE username = $username", {$username : username}, function (err, row) {
             if (err) { return done(err); }
             if (!row) {
                 return done(null, false, { message: 'Incorrect username.' });
@@ -47,6 +47,17 @@ passport.use(new LocalStrategy(
         });
     }
 ));
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    db.get("SELECT id, username, password FROM users WHERE id = $id", {$id : id}, function (err, row) {
+        done(err, row);
+    });
+});
+
 app.configure('development', function () {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
@@ -63,7 +74,7 @@ app.post('/login', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login' }));
 
 app.get('/login', function (req, res) {
-    res.render('login', {title: 'login'});
+    res.render('login', {title: 'login', user: req.user ? req.user.username : ""});
 });
 
 app.listen(3000, function () {
