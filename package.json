@@ -4,10 +4,13 @@
   "dependencies": {
     "express": "2.5.8",
     "jade": ">= 0.0.1",
-    "sqlite3": "~2.1.5",
+    "sqlite3": "git+https://github.com/aredridel/node-sqlite3.git#for-node-v0.9",
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
-    "connect-sqlite3": "~0.9.1"
+    "connect-sqlite3": "~0.9.1",
+    "nib": "~0.9.1",
+    "canvas": "~1.0.0",
+    "stylus": "~0.32.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},

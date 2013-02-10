@@ -11,12 +11,20 @@ var LocalStrategy = require('passport-local').Strategy;
 var sqlite3 = require('sqlite3').verbose();
 var SQLiteStore = require('connect-sqlite3')(express);
 
+var stylus = require('stylus');
+var nib = require('nib');
+
 var app = module.exports = express.createServer();
 var db = new sqlite3.Database('dns.db');
 
 // Configuration
 
 app.configure(function () {
+    app.use(stylus.middleware({
+        src: __dirname + '/styl',
+        dest: __dirname + '/public'
+    }));
+
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
@@ -35,7 +43,7 @@ app.configure(function () {
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
-        db.get("SELECT id, username, password FROM users WHERE username = $username", {$username : username}, function (err, row) {
+        db.get("SELECT id, username, password FROM users WHERE username = $username", {$username: username}, function (err, row) {
             if (err) { return done(err); }
             if (!row) {
                 return done(null, false, { message: 'Incorrect username.' });
@@ -74,7 +82,7 @@ app.post('/login', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login' }));
 
 app.get('/login', function (req, res) {
-    res.render('login', {title: 'login', user: req.user ? req.user.username : ""});
+    res.render('login', {title: 'Log in', user: req.user ? req.user.username : ""});
 });
 
 app.listen(3000, function () {

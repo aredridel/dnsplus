@@ -1,8 +1,16 @@
-!!!
+doctype 5
 html
   head
-    title= title
+    title
+      | DNS Management
+      if title
+        |  - #{title}
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div Logged in as "#{user}"
+    if user
+      div Logged in as "#{user}"
+    h1
+      | DNS Management
+      if title
+        |  - #{title}
     div.content!= body
